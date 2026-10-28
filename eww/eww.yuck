@@ -1,0 +1,139 @@
+(defwidget bar []
+  (centerbox :orientation "h"
+    (workspaces)
+    (music)
+    (sidestuff)
+    ))
+
+(defwidget sidestuff []
+  (box :class "sidestuff" :orientation "h" :space-evenly false :halign "end"
+    (tray)
+    (metric :label "󰝚"
+            :value {volume}
+            :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%")
+    (metric :label ""
+            :value {EWW_RAM.used_mem_perc}
+            :onchange "")
+    (metric :label "󰈔"
+            :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
+            :onchange "")
+    time)
+)
+  
+
+(defwidget workspaces []
+  (box :class "workspaces"
+       :orientation "h"
+       :space-evenly true
+       :halign "start"
+       :spacing 10
+    (logo)
+    (button :onclick "wmctrl -s 1" 1)
+    (button :onclick "wmctrl -s 2" 2)
+    (button :onclick "wmctrl -s 3" 3)
+    (button :onclick "wmctrl -s 4" 4)
+    (button :onclick "wmctrl -s 5" 5)
+    (button :onclick "wmctrl -s 6" 6)
+    (button :onclick "wmctrl -s 7" 7)
+    (button :onclick "wmctrl -s 8" 8)
+    (button :onclick "wmctrl -s 9" 9)
+    (locale :value {keymap})))
+
+
+(defwidget music []
+  (box :class "music"
+       :orientation "h"
+       :space-evenly false
+       :halign "center"
+    {music != "" ? "󰽰  ${music}" : ""}))
+
+
+(defwidget metric [label value onchange]
+  (box :orientation "h"
+       :class "metric"
+       :space-evenly false
+    (box :class "label" label)
+    (scale :min 0
+           :max 101
+           :active {onchange != ""}
+           :value value
+           :onchange onchange)
+  )
+)
+
+(defwidget tray []
+  (box :orientation "h"
+      :class "tray"
+      :space-evenly false
+      (systray :spacing 8
+           :orientation "h"
+           :space-evenly false
+           :icon-size 16
+           :prepend-new true
+      )
+  )
+)
+
+(defwidget logo [] 
+  (box :orientation "h"
+      :class "logo"
+      :space-evenly false
+      (label :text "")
+  )
+)
+
+(defwidget locale [value]
+  (box :orientation "h"
+      :class "locale"
+      :space-evenly false
+      (label :text value)
+  )
+)
+
+(defwidget music_menu []
+  (centerbox :orientation "v"
+      :class "music-menu"
+      (label :text "Music")
+      (box)
+      (box)
+  )
+)
+
+
+(deflisten music :initial ""
+  "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true")
+
+(defpoll volume :interval "0.05s"
+  :initial "0"
+  "scripts/getvol")
+
+(defpoll keymap :interval "0.1s"
+  :initial "us"
+  "scripts/getlocale")
+
+(defpoll time :interval "1s"
+  "date '+%H:%M %b %d, %Y'")
+
+
+(defwindow music_menu
+  :monitor 0
+  :geometry (geometry :x "35%"
+                      :y "0%"
+                      :width "30%"
+                      :height "30%")
+  :exclusive false
+  :stacking "fg"
+  (music_menu)
+)
+
+(defwindow bar
+  :monitor 0
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "100%"
+                      :height "5px"
+                      :anchor "top center")
+  :exclusive true
+  :stacking "fg"
+  :wm-ignore false
+  (bar))

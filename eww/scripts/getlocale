@@ -1,0 +1,13 @@
+#!/bin/sh
+layout=$(hyprctl devices -j | jq -r '.keyboards[1].active_keymap')
+case "$layout" in
+    "Russian")
+        echo ru
+        ;;
+    "English (US)")
+        echo us
+        ;;
+    *)
+        echo ??
+        ;;
+esac

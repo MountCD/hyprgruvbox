@@ -1,0 +1,67 @@
+* {
+  all: unset; //Unsets everything so you can style everything from scratch
+  
+  font-family: 'Hack Nerd Font Propo' //Cool font
+}
+
+//Global Styles
+.bar {
+  background-color: #282828;
+  color: #ebdbb2;
+  padding: 10px;
+//border-radius: 14px;
+//background: transparent; Looks good, but no
+}
+
+// Styles on classes (see eww.yuck for more information)
+
+.sidestuff slider {
+  all: unset;
+  color: #ffd5cd;
+}
+
+.metric scale trough highlight {
+  all: unset;
+  background-color: #b16286;
+  color: #000000;
+  border-radius: 10px;
+}
+.metric scale trough {
+  all: unset;
+  background-color: #1d2021;
+  border-radius: 50px;
+  min-height: 3px;
+  min-width: 100px;
+  margin-left: 10px;
+  margin-right: 20px;
+}
+.metric scale trough highlight {
+  all: unset;
+  background-color: #b16286;
+  color: #000000;
+  border-radius: 10px;
+}
+.metric scale trough {
+  all: unset;
+  background-color: #1d2021;
+  border-radius: 50px;
+  min-height: 3px;
+  min-width: 50px;
+  margin-left: 10px;
+  margin-right: 20px;
+}
+.label-ram {
+  font-size: large;
+}
+.workspaces button:hover {
+  color: #b16286;
+}
+.tray {
+  margin-left: 15px;
+  margin-right: 20px;
+}
+.music-menu {
+  all: unset;
+  background-color: #282828;
+  border-radius: 50px;
+}

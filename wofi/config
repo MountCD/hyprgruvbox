@@ -1,0 +1,3 @@
+style=/home/mntcd/.config/wofi/gruvbox.css
+term=kitty
+insensitive=true
